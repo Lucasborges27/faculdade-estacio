@@ -1,6 +1,4 @@
- HEAD
-
-
+ 
 # Jogo de Cartas - Super Trunfo
 
 Esse é um projeto de um jogo de cartas no estilo **Super Trunfo**, feito para fins de estudo e diversão.
