@@ -10,4 +10,4 @@ Os jogadores escolhem um atributo e a carta com o maior valor vence a rodada.
 
 ## 📸 Exemplo do Jogo Rodando no Terminal
 
-![Print do jogo](./SUPERTRUNFOIMG.png)
+![Print do jogo](./supertrunfofim.png)
