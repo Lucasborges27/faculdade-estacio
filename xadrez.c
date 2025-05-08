@@ -120,21 +120,16 @@ case 'Q': {
 }//FECHA O CASE Q
     break;
     case 'S':
+        system("clear");
         printf("Saindo do jogo...\n");
     break;
 default:
+        system("clear");
         printf("Peça inválida. Escolha entre T, B ou Q.\n");
     break;
     
  }//FECHA O SWITCH
 //IMPRIME O TABULEIRO NOVAMENTE
-    printf("Tabuleiro atualizado:\n");
-    for (i = 0; i < 8; i++) {
-        for (j = 0; j < 8; j++) {
-            printf("%c ", tabuleiro[i][j]);
-        }
-        printf("\n");
-    }
 }while (peca != 'S');
     printf("Saindo do jogo...\n");
     return 0;
