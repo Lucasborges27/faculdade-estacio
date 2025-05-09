@@ -9,17 +9,18 @@ int posX = 7, posY = -1;
 int newX = posX;
 int newY = posY;
 int passos = 0;
-    //TABULEIRO BASEADO NA IDEIA DE UMA MATRIZ 8X8
+    // Inicializando o tabuleiro
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            tabuleiro[i][j] = '.';  // Preenche todo o tabuleiro com pontos QUE SERIA AS CASAS
+        }
+    }
+    // Colocando as peças na última linha (linha 7)
     for (j = 0; j < 8; j++) {
         tabuleiro[7][j] = linha1[j];
     }
-    // PREENCHER OS ESPAÇOS SEM USO COM UM PONTINHO
-    for (i = 0; i < 7; i++) {
-    for (j = 0; j < 8; j++) {
-            tabuleiro[i][j] = '.';
-        }
-    }
-
+    // Colocando o Cavalo na posição inicial (0,1) MANUALMENTE
+    tabuleiro[0][1] = 'C';
 //O TABULEIRO DEFINITIVAMENTE MONTADO E IMPRESSO COM AS PEÇAS NA POSIÇÃO INICIAL
            printf("Bem-vindo ao xadrez de bruxo!!!");
            printf("\n\n");
@@ -33,12 +34,13 @@ int passos = 0;
            printf("\n");
     }
 //SELECIONE QUAL PEÇA QUER MOVER 
-        printf("Selecione a peça que deseja mover (T, B, Q): \n");
+        printf("Pressione cada tecla em sequencia para ver o movimento da peça (T, C, B, Q): \n");
+        printf("Ou pressione S para sair do jogo.\n");
         scanf(" %c", &peca);
     switch (peca){
-case 'T':{
+case 'T':{ //USO DO FOR
         system("clear");
-        printf("Você escolheu a Torre.\n");
+        printf("Você escolheu a Torre (Cinco casas para a Direita).\n");
     for (j = 0; j < 8; j++) {
     if (tabuleiro[posX][j] == peca) { //VERIFICA SE A PEÇA TA NA POSIÇÃO INDICADA E SE SIM EXECUTA O MOVIMENTO INDICADO
         posY = j; //SALVEI A POSIÇÃO DA PEÇA
@@ -62,24 +64,22 @@ case 'T':{
 }//FECHA O CASE T
     break;
 case 'B': {
-    if (peca == 'B') {
+    if (peca == 'B') { //USO OBRIGATORIO DO...WHILE
        system("clear");
-       printf("Você escolheu o Bispo.\n");
+       printf("Você escolheu o Bispo (5 casas na diagonal direita).\n");
     posY = -1;
     for (j = 0; j < 8; j++) {
-    if (tabuleiro[posX][j] == 'B') {
+    if (tabuleiro[7][j] == 'B') {
         posY = j;
     break;
         }
     }
-
     if (posY == -1) {
         printf("Bispo não encontrado.\n");
   } else {
-        newX = posX;
+        newX = 7;
         newY = posY;
         passos = 0;
-
     do {
         newX--; // Sobe
         newY++; // Vai pra direita
@@ -94,7 +94,7 @@ case 'B': {
 } while (passos < 5);
 
     if (newX >= 0 && newY < 8) {
-        tabuleiro[posX][posY] = '.';       // Remove da posição antiga
+        tabuleiro[7][posY] = '.';       // Remove da posição antiga
         tabuleiro[newX][newY] = 'B';       // Coloca na nova posição
                 printf("Bispo movido para (%d, %d).\n", newX, newY);
         }
@@ -102,10 +102,10 @@ case 'B': {
 }
 }
     break;
-case 'Q': {
+case 'Q': { //USO DO IF PORQUE DE QUALQUER JEITO NÃO IA ANDAR PRA LUGAR NENHUM 
     if (peca == 'Q') {
         system("clear");
-        printf("Você escolheu a Rainha.\n");
+        printf("Você escolheu a Rainha (8 casas para a esquerda sai do numero de casa do tabuleiro).\n");
 //Rainha oito casas para a esquerda. (Erro inesperado)
         newX = posX;
         newY = posY - 8; // RAINHA VAI 8 CASAS PRA ESQUERDA
@@ -117,21 +117,55 @@ case 'Q': {
         printf("MOVIMENTO NÃO PERMITIDO: fora dos limites do tabuleiro\n");
     }
 }
+break;
 }//FECHA O CASE Q
-    break;
+    
+break;
+case 'C':{ // USO DO FOR E WHILE 
+    system("clear");
+    printf("Você escolheu o Cavalo (2 Casas para baixo e 1 para a esquerda).\n");
+
+    posX = 0;     // Cavalo começa na linha 0
+    posY = 1;
+    // FOR OBRIGATORIO PARA ACHAR O CAVALO NA 0,1
+    for (j = 0; j < 8; j++) {
+        if (tabuleiro[posX][j] == 'C') {
+    posY = j;
+            // WHILE aninhado
+    int passos = 0;
+    newX = posX;
+    newY = posY;
+            while (passos < 1) { // só um movimento do cavalo
+    newX += 2;       // 2 pra baixo
+    newY -= 1;       // 1 pra esquerda
+    passos++;
+            }
+            break; 
+        }
+    }
+    if (posY == -1) {
+        printf("Cavalo não encontrado na linha 0.\n");
+    } else if (newX < 8 && newY >= 0) {
+    tabuleiro[posX][posY] = '.';      // remove da posição antiga
+    tabuleiro[newX][newY] = 'C';      // coloca na nova
+        system("clear");
+        printf("Movimento realizado: Cavalo movido para (%d, %d)\n", newX, newY);
+    } else {
+        printf("Movimento inválido: fora dos limites do tabuleiro.\n");
+    }
+}
+        break;
     case 'S':
         system("clear");
         printf("Saindo do jogo...\n");
     break;
 default:
         system("clear");
-        printf("Peça inválida. Escolha entre T, B ou Q.\n");
-    break;
+        printf("Peça inválida. Escolha entre T, C, B ou Q.\n");
+
     
  }//FECHA O SWITCH
-//IMPRIME O TABULEIRO NOVAMENTE
 }while (peca != 'S');
-    printf("Saindo do jogo...\n");
     return 0;
     //FIM DO JOGO
 }
